@@ -120,7 +120,7 @@ const keyframes = `
 
 function Home() {
   const [activeSection, setActiveSection] = useState('home');
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [showProject, setShowProject] = useState(null);
   const [scrollY, setScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -215,6 +215,15 @@ function Home() {
     },
     {
       id: 2,
+      title: "Remotify.ph - Remote Job Platform",
+      description: "Developed and deployed a remote job listing platform for Filipino professionals. Architected and implemented the server infrastructure on Linode with optimized performance and security configurations. Integrated with Cloudflare for CDN, DDoS protection, and SSL management.\nKey Results: Achieved fast load times with global accessibility and robust security posture.",
+      tech: ["Linode", "Cloudflare", "Linux/Ubuntu", "Server Management", "Web Security", "Performance Optimization"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Remotify.ph",
+      client: "Remotify.ph",
+      status: "Active"
+    },
+    {
+      id: 3,
       title: "CI/CD Pipeline Implementation",
       description: "Developed comprehensive CI/CD pipelines for automated testing, building, and deployment of web applications. Reduced deployment time by 70% and eliminated manual deployment errors.\nKey Results: Enabled zero-downtime deployments and improved release frequency for multiple teams.",
       tech: ["Docker", "GitHub Actions", "AWS CloudFormation", "Jenkins", "Bash"],
@@ -222,7 +231,7 @@ function Home() {
       client: "Various Clients"
     },
     {
-      id: 3,
+      id: 4,
       title: "E-commerce API Integration Platform",
       description: "Built a containerized integration platform connecting inventory systems with Shopify and eBay marketplaces. Deployed using microservices architecture with Docker and AWS ECS.",
       tech: ["Docker", "AWS ECS", "React.js", "Shopify API", "eBay API", "Node.js"],
@@ -230,7 +239,7 @@ function Home() {
       client: "Hammerulo Data Corporation"
     },
     {
-      id: 4,
+      id: 5,
       title: "Single Sign-On Infrastructure",
       description: "Designed and implemented a secure, scalable SSO system with automated failover and load balancing. Integrated with multiple application backends while maintaining 99.9% uptime.",
       tech: ["AWS", "Docker", "OAuth 2.0", "Load Balancing", "Monitoring"],
@@ -238,19 +247,12 @@ function Home() {
       client: "Philippine Statistical Research and Training Institute"
     },
     {
-      id: 5,
+      id: 6,
       title: "HMO Portal System & Infrastructure",
       description: "Built and deployed a secure healthcare portal with strict data privacy requirements. Implemented encrypted data storage, secure API gateways, and HIPAA-compliant infrastructure.",
       tech: ["AWS", "Laravel", "Vue.js", "WebSockets", "Security Hardening"],
       image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=HMO+Portal",
       client: "OmniQuest Inc."
-    },
-    {
-      id: 6,
-      title: "Server Monitoring & Automated Recovery",
-      description: "Implemented comprehensive monitoring solutions with automated incident response. Created custom dashboards and alert systems with automated recovery procedures for common failure scenarios.",
-      tech: ["Prometheus", "Grafana", "AWS CloudWatch", "Bash Scripts", "Ansible"],
-      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Monitoring"
     }
   ];
 
@@ -259,7 +261,7 @@ function Home() {
     {
       category: "DevOps, Cloud & Automation",
       skills: [
-        "AWS", "Google Cloud", "Linode", "Docker", "Linux/Ubuntu", "Server Management", "CI/CD", "Infrastructure as Code", "Terraform", "Ansible", "Jenkins", "Prometheus", "Grafana", "Monitoring/Alerting"
+        "AWS", "Google Cloud", "Linode", "Docker", "Linux/Ubuntu", "Server Management", "CI/CD", "Infrastructure as Code", "Cloudflare", "AWS CloudTemplate", "Monitoring/Alerting"
       ]
     },
     {
@@ -486,36 +488,8 @@ function Home() {
           </button>
         </div>
         
-        {/* Mobile Menu Button & Theme Toggle */}
+        {/* Mobile Menu Button */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <button 
-            onClick={toggleDarkMode} 
-            style={{ 
-              background: 'transparent',
-              border: 'none',
-              color: theme.textPrimary,
-              fontSize: '1.2rem',
-              cursor: 'pointer',
-              padding: '0.5rem',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.3s ease'
-            }}
-            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            {isDarkMode ? 
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
-              </svg>
-              : 
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8z"/>
-              </svg>
-            }
-          </button>
-          
           <button 
             className="mobile-menu-btn"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -1004,7 +978,7 @@ function Home() {
               </div>
             </div>
             
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', marginTop: '3rem', color: theme.textPrimary }}>Freelance Projects</h3>
+            <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', marginTop: '3rem', color: theme.textPrimary }}>Additional Infrastructure Projects</h3>
             <div style={{ 
               background: isDarkMode ? 'rgba(100,255,218,0.05)' : 'rgba(75,108,183,0.05)',
               padding: '1.5rem',
@@ -1012,11 +986,9 @@ function Home() {
               marginBottom: '2rem'
             }}>
               <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.8', paddingLeft: '1rem' }}>
-                <li><strong><a href="https://remotify.ph" target="_blank" rel="noopener noreferrer" style={{ color: theme.accent, textDecoration: 'none' }}>Remotify.ph</a></strong> - Developed a remote job listing platform for Filipino professionals (active)</li>
-                <li><strong><a href="https://felsontech.com" target="_blank" rel="noopener noreferrer" style={{ color: theme.accent, textDecoration: 'none' }}>Felson Tech</a></strong> - Built corporate website showcasing IT services and solutions (active)</li>
-                <li><strong>Law Base PH</strong> - Created legal case management system (no longer active)</li>
-                <li><strong>Dela Rosa Casil Law</strong> - Designed and developed law firm website (no longer active)</li>
-                <li>Built custom web applications using WordPress, Laravel, and modern JavaScript frameworks</li>
+                <li><strong><a href="https://felsontech.com" target="_blank" rel="noopener noreferrer" style={{ color: theme.accent, textDecoration: 'none' }}>Felson Tech</a></strong> - Deployed scalable hosting infrastructure and implemented automated backup system with monitoring (active)</li>
+                <li><strong>Legal Services Platform</strong> - Configured secure AWS-based hosting for sensitive legal documents with encryption at rest and in transit</li>
+                <li>Specialized in secure, high-performance hosting solutions for business-critical applications</li>
               </ul>
             </div>
           </div>
@@ -1623,6 +1595,7 @@ function Home() {
           onMouseEnter={(e) => {
             e.target.style.transform = 'translateY(-8px)';
             e.target.style.boxShadow = isDarkMode 
+              
               ? '0 20px 40px rgba(6,182,212,0.15)' 
               : '0 20px 40px rgba(2,132,199,0.12)';
           }}
@@ -1724,39 +1697,30 @@ function Home() {
                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
               </svg>
             </div>
-            <div style={{ 
-              color: theme.textPrimary, 
-              fontWeight: '700', 
-              fontSize: '1.1rem', 
-              marginBottom: '0.8rem',
-              textAlign: 'center'
-            }}>
-              LinkedIn
-            </div>
             <a 
               href="https://www.linkedin.com/in/nak-llantada-b39b26b4/"
               target="_blank"
               rel="noopener noreferrer"
               style={{ 
-                color: theme.accent, 
+                color: theme.textPrimary,
+                fontWeight: '700',
+                fontSize: '1.1rem',
                 textDecoration: 'none',
-                fontSize: '0.95rem',
-                fontWeight: '500',
                 display: 'block',
                 textAlign: 'center',
                 transition: 'all 0.3s ease',
                 padding: '0.5rem 0'
               }}
               onMouseEnter={(e) => {
-                e.target.style.color = theme.secondaryAccent;
+                e.target.style.color = theme.accent;
                 e.target.style.transform = 'scale(1.05)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.color = theme.accent;
+                e.target.style.color = theme.textPrimary;
                 e.target.style.transform = 'scale(1)';
               }}
             >
-              /in/nak-llantada-b39b26b4
+              LinkedIn
             </a>
           </div>
           
