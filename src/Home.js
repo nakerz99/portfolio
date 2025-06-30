@@ -207,70 +207,72 @@ function Home() {
   const projects = [
     {
       id: 1,
-      title: "HMO Portal System",
-      description: "Multi-role healthcare management portal with three distinct dashboards: Admin for analytics and oversight, HR for employee management, and Employee portal for online consultation scheduling with priority queuing.",
-      tech: ["Laravel", "Vue.js", "MySQL", "WebSockets", "Bootstrap"],
-      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=HMO+Portal",
-      client: "OmniQuest Inc."
+      title: "Multi-Cloud Infrastructure Deployment",
+      description: "Designed and deployed scalable cloud infrastructure spanning AWS, Google Cloud, and Linode for high-availability applications. Implemented automated backups, monitoring systems, and secure network configurations.\nKey Results: Achieved 99.99% uptime and reduced infrastructure costs by 30% through automation.",
+      tech: ["AWS", "Google Cloud", "Linode", "Terraform", "Docker", "Linux/Ubuntu"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Cloud+Architecture",
+      client: "Hammerulo Data Corporation"
     },
     {
       id: 2,
-      title: "Inventory with QR Code System",
-      description: "Complete asset tracking system using QR codes to monitor the full lifecycle of items. Tracks purchase details, expiration dates, current location, and complete movement history of each inventory item.",
-      tech: ["Laravel", "JavaScript", "QR Code API", "MySQL", "Bootstrap"],
-      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=QR+Inventory",
-      client: "Philippine Statistical Research and Training Institute"
+      title: "CI/CD Pipeline Implementation",
+      description: "Developed comprehensive CI/CD pipelines for automated testing, building, and deployment of web applications. Reduced deployment time by 70% and eliminated manual deployment errors.\nKey Results: Enabled zero-downtime deployments and improved release frequency for multiple teams.",
+      tech: ["Docker", "GitHub Actions", "AWS CloudFormation", "Jenkins", "Bash"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=CI/CD+Pipeline",
+      client: "Various Clients"
     },
     {
       id: 3,
-      title: "HRIS with Payroll System",
-      description: "Human Resources Information System with integrated payroll functionality for a government agency, featuring employee management, leave tracking, payroll calculation, and comprehensive reporting.",
-      tech: ["Laravel", "MySQL", "JavaScript", "jQuery", "Bootstrap"],
-      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=HRIS+System",
-      client: "Philippine Statistical Research and Training Institute"
-    },
-    {
-      id: 4,
-      title: "E-commerce API Integration",
-      description: "Integration platform connecting client's inventory system with Shopify and eBay marketplaces, allowing for seamless product listing, inventory sync, and order management across multiple channels.",
-      tech: ["PHP", "React.js", "Shopify API", "eBay API", "MySQL"],
+      title: "E-commerce API Integration Platform",
+      description: "Built a containerized integration platform connecting inventory systems with Shopify and eBay marketplaces. Deployed using microservices architecture with Docker and AWS ECS.",
+      tech: ["Docker", "AWS ECS", "React.js", "Shopify API", "eBay API", "Node.js"],
       image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=E-commerce+API",
       client: "Hammerulo Data Corporation"
     },
     {
-      id: 5,
-      title: "Single Sign-On System",
-      description: "Centralized authentication system allowing users to access multiple applications with one set of credentials. Integrates with ticketing system and inventory management via custom API endpoints.",
-      tech: ["Laravel", "RESTful API", "OAuth 2.0", "MySQL", "Vue.js"],
+      id: 4,
+      title: "Single Sign-On Infrastructure",
+      description: "Designed and implemented a secure, scalable SSO system with automated failover and load balancing. Integrated with multiple application backends while maintaining 99.9% uptime.",
+      tech: ["AWS", "Docker", "OAuth 2.0", "Load Balancing", "Monitoring"],
       image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=SSO+System",
       client: "Philippine Statistical Research and Training Institute"
     },
     {
+      id: 5,
+      title: "HMO Portal System & Infrastructure",
+      description: "Built and deployed a secure healthcare portal with strict data privacy requirements. Implemented encrypted data storage, secure API gateways, and HIPAA-compliant infrastructure.",
+      tech: ["AWS", "Laravel", "Vue.js", "WebSockets", "Security Hardening"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=HMO+Portal",
+      client: "OmniQuest Inc."
+    },
+    {
       id: 6,
-      title: "Cloud Server Infrastructure",
-      description: "Designed and deployed scalable cloud infrastructure for client applications using AWS, Google Cloud, and Linode. Implemented security best practices, automated backups, and monitoring systems.",
-      tech: ["AWS", "Google Cloud", "Linode", "Docker", "Linux/Ubuntu"],
-      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Cloud+Infra"
+      title: "Server Monitoring & Automated Recovery",
+      description: "Implemented comprehensive monitoring solutions with automated incident response. Created custom dashboards and alert systems with automated recovery procedures for common failure scenarios.",
+      tech: ["Prometheus", "Grafana", "AWS CloudWatch", "Bash Scripts", "Ansible"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Monitoring"
     }
   ];
 
   // Skills data
   const skillCategories = [
     {
-      category: "Frontend Libraries and Tools",
-      skills: ["JavaScript", "ReactJS", "jQuery", "Vue.js"]
+      category: "DevOps, Cloud & Automation",
+      skills: [
+        "AWS", "Google Cloud", "Linode", "Docker", "Linux/Ubuntu", "Server Management", "CI/CD", "Infrastructure as Code", "Terraform", "Ansible", "Jenkins", "Prometheus", "Grafana", "Monitoring/Alerting"
+      ]
     },
     {
-      category: "Backend & Database",
+      category: "Backend & APIs",
       skills: ["PHP", "Laravel", "MySQL", "REST APIs", "SOAP API", "GraphQL", "CodeIgniter", "Symfony"]
     },
     {
-      category: "DevOps & Infrastructure",
-      skills: ["AWS", "Google Cloud", "Linux/Ubuntu", "Docker"]
+      category: "Frontend Development",
+      skills: ["JavaScript", "ReactJS", "Vue.js", "jQuery", "Responsive Design"]
     },
     {
-      category: "Tools & Others",
-      skills: ["Git", "WordPress", "VS Code", "Agile Methodologies"]
+      category: "Automation & Tools",
+      skills: ["Git", "GitHub Actions", "WordPress", "VS Code", "Agile", "LAMP Stack", "Bash Scripting"]
     }
   ];
   
@@ -803,7 +805,7 @@ function Home() {
               fontWeight: '600',
               letterSpacing: '0.5px'
             }}>
-              Full Stack Web Application Developer
+              DevOps Engineer & Full Stack Developer
             </div>
             
             <p style={{ 
@@ -812,9 +814,7 @@ function Home() {
               lineHeight: '1.8', 
               color: theme.textSecondary 
             }}>
-              Expert in building scalable web applications with PHP/Laravel, JavaScript,
-              and cloud technologies. Specialized in creating e-commerce integrations,
-              enterprise systems, and secure server infrastructures.
+              AWS Certified DevOps Engineer with a proven track record in architecting, automating, and maintaining secure, scalable cloud infrastructure across AWS, Google Cloud, and Linode. Expert in CI/CD, containerization, and infrastructure as code. Passionate about driving operational excellence, leading teams, and delivering robust solutions for modern web applications.
             </p>
           </div>
         </div>
@@ -1573,7 +1573,7 @@ function Home() {
               justifyContent: 'center'
             }}>
               <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
               </svg>
             </div>
             <div style={{ 
