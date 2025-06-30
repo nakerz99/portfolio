@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nak Roque Llantada - Resume PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            line-height: 1.5;
+            background-color: #f9fafb;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        #resumeContent {
+            background-color: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+            color: white;
+            padding: 25px 40px;
+            position: relative;
+        }
+        
+        .profile-info {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+        
+        .title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .summary {
+            max-width: 90%;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            margin-right: 20px;
+        }
+        
+        .contact-item svg {
+            width: 14px;
+            height: 14px;
+            margin-right: 8px;
+            fill: white;
+        }
+        
+        .content {
+            padding: 30px 40px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0284c7;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .experience-item, .project-item {
+            margin-bottom: 18px;
+            page-break-inside: avoid;
+        }
+        
+        .job-title, .project-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1f2937;
+        }
+        
+        .company, .project-client {
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 2px;
+        }
+        
+        .project-client {
+            margin-top: 2px;
+            font-size: 13px;
+            color: #4b5563;
+        }
+        
+        .period {
+            font-weight: 400;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .responsibilities, .skills-list, .education-details {
+            margin-left: 18px;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        
+        .responsibilities li, .skills-list li {
+            margin-bottom: 4px;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 10px;
+        }
+        
+        .skill-category {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .skill-category-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .degree, .institution {
+            margin-bottom: 0;
+        }
+        
+        .degree {
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .institution, .certification-details {
+            font-size: 14px;
+        }
+        
+        .graduation-year {
+            font-size: 13px;
+            color: #6b7280;
+        }
+        
+        .project-status {
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .active {
+            color: #10b981;
+        }
+        
+        .inactive {
+            color: #dc2626;
+        }
+        
+        .item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.2);
+        }
+
+        .return-btn {
+            background: transparent;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .return-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* This will be removed in the PDF */
+        @media print {
+            .buttons {
+                display: none;
+            }
+            
+            body {
+                padding: 0;
+                background-color: white;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="resumeContent">
+            <div class="header">
+                <div class="profile-info">
+                    <h1 class="name">Nak Roque Llantada</h1>
+                    <div class="title">Full Stack Web Developer & DevOps Specialist</div>
+                    <p class="summary">
+                        Results-driven Full Stack Developer with 6+ years of experience specializing in web application development, cloud infrastructure, and DevOps automation. Proven track record in designing, developing, and maintaining innovative web applications, RESTful APIs, and scalable infrastructure on AWS/Linode. Committed to delivering high-performance solutions with strong problem-solving skills and technical expertise.
+                    </p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            nak.llantada@gmail.com
+                        </div>
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                            +63 961 384 3081
+                        </div>
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd" />
+                            </svg>
+                            linkedin.com/in/nak-llantada-b39b26b4
+                        </div>
+                        <div class="contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                            </svg>
+                            Manila, Philippines
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="section">
+                    <h2 class="section-title">Skills</h2>
+                    <div class="skills-container">
+                        <div class="skill-category">
+                            <h3 class="skill-category-name">DevOps & Cloud</h3>
+                            <ul class="skills-list">
+                                <li>AWS (EC2, S3, RDS, Lambda)</li>
+                                <li>Linode/Digital Ocean</li>
+                                <li>Docker & Containerization</li>
+                                <li>Linux Administration</li>
+                                <li>CI/CD Pipelines</li>
+                                <li>Cloudflare</li>
+                                <li>Shell Scripting</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3 class="skill-category-name">Frontend</h3>
+                            <ul class="skills-list">
+                                <li>JavaScript/ES6+</li>
+                                <li>React.js</li>
+                                <li>Vue.js</li>
+                                <li>HTML5/CSS3/SASS</li>
+                                <li>Bootstrap/Tailwind</li>
+                                <li>Responsive Web Design</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3 class="skill-category-name">Backend</h3>
+                            <ul class="skills-list">
+                                <li>PHP/Laravel</li>
+                                <li>Node.js/Express</li>
+                                <li>MySQL/PostgreSQL</li>
+                                <li>MongoDB</li>
+                                <li>RESTful APIs</li>
+                                <li>API Integration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Professional Experience</h2>
+                    
+                    <div class="experience-item">
+                        <div class="item-header">
+                            <div class="job-title">Sr. Software Developer</div>
+                            <div class="period">April 2021 - Present</div>
+                        </div>
+                        <div class="company">Hammerulo Data Corporation, Taguig City</div>
+                        <ul class="responsibilities">
+                            <li>Develop and maintain web applications</li>
+                            <li>Integrate e-commerce API to web applications (Ebay and Shopify)</li>
+                            <li>Develop front-end website architecture using ReactJs</li>
+                            <li>Develop back-end website applications using Laravel</li>
+                            <li>Create and maintain servers (AWS, Linode, Google Cloud)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-header">
+                            <div class="job-title">Freelance Web Developer</div>
+                            <div class="period">2018 - Present</div>
+                        </div>
+                        <div class="company">Self-employed</div>
+                        <ul class="responsibilities">
+                            <li>Server configuration and management for client websites using Linux/Ubuntu</li>
+                            <li>Performance optimization for WordPress sites using OpenLiteSpeed</li>
+                            <li>Implementation of security measures and CDN integration with Cloudflare</li>
+                            <li>Development of custom web solutions for various clients</li>
+                            <li>Ongoing maintenance and support for client websites and applications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-header">
+                            <div class="job-title">Highly Technical ICT Consultant</div>
+                            <div class="period">January 2021 - December 2021</div>
+                        </div>
+                        <div class="company">Philippine Statistical Research and Training Institute, Quezon City</div>
+                        <ul class="responsibilities">
+                            <li>Developed Human Resources Information System (HRIS) with Payroll System using Laravel</li>
+                            <li>Developed Single Sign-in application and integrated other applications via API</li>
+                            <li>Supervised Jr. Developers for better coding practices</li>
+                            <li>Created system documentation for users and knowledge management</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-header">
+                            <div class="job-title">Senior Full Stack Web Application Developer</div>
+                            <div class="period">May 2020 - April 2021</div>
+                        </div>
+                        <div class="company">Philippine Statistical Research and Training Institute, Quezon City</div>
+                        <ul class="responsibilities">
+                            <li>Developed applications for day-to-day operations</li>
+                            <li>Created inventory system using QR code to track assets from purchase to disposal</li>
+                            <li>Provided IT support to end-users across the organization</li>
+                            <li>Conducted technical training for staff and other users</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-header">
+                            <div class="job-title">Full Stack Web Application Developer</div>
+                            <div class="period">June 2019 - April 2020</div>
+                        </div>
+                        <div class="company">Philippine Statistical Research and Training Institute, Quezon City</div>
+                        <ul class="responsibilities">
+                            <li>Developed web applications for research and training management</li>
+                            <li>Created and maintained databases for research data and analytics</li>
+                            <li>Implemented security protocols for data protection</li>
+                            <li>Designed user interfaces for internal applications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-header">
+                            <div class="job-title">Sr. Application Developer</div>
+                            <div class="period">May 2018 - August 2019</div>
+                        </div>
+                        <div class="company">OmniQuest Inc. | Reliance Group of Companies</div>
+                        <ul class="responsibilities">
+                            <li>Developed front-end website architecture</li>
+                            <li>Designed user interactions on web pages</li>
+                            <li>Developed back-end website applications</li>
+                            <li>Ensured cross-platform optimization for mobile phones</li>
+                            <li>Created and maintained servers (AWS)</li>
+                            <li>Secured APIs and server connections for user data privacy (HMO DATA)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-item">
+                        <div class="item-header">
+                            <div class="job-title">Web Developer</div>
+                            <div class="period">2017 - 2018</div>
+                        </div>
+                        <div class="company">Magnalux Digital Incorporation</div>
+                        <ul class="responsibilities">
+                            <li>Developed a comprehensive Payroll System with time tracking and reporting features</li>
+                            <li>Created custom e-commerce websites for clients across various industries</li>
+                            <li>Built and maintained WordPress projects with custom themes and plugins</li>
+                            <li>Implemented responsive designs and ensured cross-browser compatibility</li>
+                            <li>Collaborated with design and marketing teams to deliver integrated digital solutions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Freelance Projects</h2>
+                    
+                    <div class="project-item">
+                        <div class="item-header">
+                            <div class="project-name">AV Suites - Boutique Hotel Website</div>
+                            <div class="project-status active">Active</div>
+                        </div>
+                        <div class="project-client">Client: AV Suites | avsuites.com</div>
+                        <ul class="responsibilities">
+                            <li>Developed website for luxury boutique hotel overlooking the Mindoro Strait in Puerto Galera</li>
+                            <li>Designed online booking system and integrated virtual property tour feature</li>
+                            <li>Technologies: WordPress, Booking System, Virtual Tour, SEO, Responsive Design</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="item-header">
+                            <div class="project-name">Remotify.ph - Remote Job Platform</div>
+                            <div class="project-status active">Active</div>
+                        </div>
+                        <div class="project-client">Client: Remotify.ph | remotify.ph</div>
+                        <ul class="responsibilities">
+                            <li>Deployed and managed high-availability infrastructure using Linode virtual servers</li>
+                            <li>Implemented AWS RDS for database and object storage for media files</li>
+                            <li>Set up Cloudflare for CDN, DDoS protection, firewall, and reverse proxy</li>
+                            <li>Technologies: Linode, AWS RDS, Object Storage, Cloudflare, Linux, Auto-Backup</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="item-header">
+                            <div class="project-name">Felson Tech - Corporate Website</div>
+                            <div class="project-status active">Active</div>
+                        </div>
+                        <div class="project-client">Client: Felson Technology & Solutions Corporation | felsontech.com</div>
+                        <ul class="responsibilities">
+                            <li>Built corporate website for one of the competitive trading companies in the Philippines</li>
+                            <li>Implemented product showcase for wholesaling and retailing of high quality hardware materials</li>
+                            <li>Technologies: HTML/CSS, JavaScript, Bootstrap, PHP, jQuery</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="item-header">
+                            <div class="project-name">LawBasePh - Case Management System</div>
+                            <div class="project-status inactive">Inactive</div>
+                        </div>
+                        <ul class="responsibilities">
+                            <li>Created legal case management system with document organization</li>
+                            <li>Implemented client profiles and calendar integration</li>
+                            <li>Technologies: Laravel, MySQL, Vue.js, Bootstrap, REST API</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="project-item">
+                        <div class="item-header">
+                            <div class="project-name">Dela Rosa & Casilla Law - Firm Website</div>
+                            <div class="project-status inactive">Inactive</div>
+                        </div>
+                        <ul class="responsibilities">
+                            <li>Designed and developed website for a boutique law firm specializing in corporate, civil, and family law</li>
+                            <li>Implemented attorney profiles, detailed practice areas, and integrated contact system</li>
+                            <li>Technologies: WordPress, CSS, JavaScript, PHP, Contact Form 7</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="column">
+                        <div class="section">
+                            <h2 class="section-title">Education</h2>
+                            <div class="experience-item">
+                                <p class="degree">Bachelor of Science in Computer Science</p>
+                                <p class="institution">AMA Computer University</p>
+                                <p class="graduation-year">Graduated 2019</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="column">
+                        <div class="section">
+                            <h2 class="section-title">Certifications</h2>
+                            <div class="experience-item">
+                                <p class="degree">AWS Certified Cloud Practitioner</p>
+                                <p class="certification-details">Amazon Web Services | April 2019</p>
+                            </div>
+                            <div class="experience-item">
+                                <p class="degree">Laravel Certified Developer</p>
+                                <p class="certification-details">Laravel | October 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="downloadBtn" class="download-btn" onclick="generatePDF()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                </svg>
+                Download Resume PDF
+            </button>
+            <a href="/" class="return-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                </svg>
+                Return to Portfolio
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Automatically generate PDF when the page loads
+        window.onload = function() {
+            // Add a slight delay to ensure all resources are loaded
+            setTimeout(function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const autoDownload = urlParams.get('autoDownload');
+                
+                if (autoDownload === 'true') {
+                    generatePDF();
+                }
+            }, 1000);
+        };
+        
+        function generatePDF() {
+            // Show loading state
+            const downloadBtn = document.getElementById('downloadBtn');
+            const originalText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<span>Generating PDF...</span>';
+            downloadBtn.disabled = true;
+            
+            // Get the resume content
+            const element = document.getElementById('resumeContent');
+            
+            // Configuration for PDF
+            const opt = {
+                margin: [0, 0],
+                filename: 'Nak_Llantada_Resume.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true, 
+                    letterRendering: true,
+                    logging: false
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait' 
+                }
+            };
+            
+            // Generate PDF
+            html2pdf().from(element).set(opt).save().then(() => {
+                // Restore button state
+                downloadBtn.innerHTML = originalText;
+                downloadBtn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>

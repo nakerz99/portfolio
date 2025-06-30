@@ -893,7 +893,8 @@ function Home() {
               fontWeight: '600',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              transform: 'translateY(0)'
+              transform: 'translateY(0)',
+              marginRight: '1rem'
             }}
             onMouseEnter={(e) => {
               e.target.style.transform = 'translateY(-3px)';
@@ -906,6 +907,34 @@ function Home() {
           >
             View My Work
           </button>
+          <a 
+            href={`${process.env.PUBLIC_URL}/resume/Nak_LlantadaCV.pdf`}
+            download
+            style={{
+              background: 'transparent',
+              color: theme.textPrimary,
+              border: '2px solid ' + theme.accent,
+              padding: '0.85rem 2.5rem',
+              borderRadius: '30px',
+              fontSize: '1.1rem',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              transform: 'translateY(0)',
+              textDecoration: 'none',
+              display: 'inline-block'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'translateY(-3px)';
+              e.target.style.background = isDarkMode ? 'rgba(6,182,212,0.1)' : 'rgba(14,165,233,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.background = 'transparent';
+            }}
+          >
+            Download Resume
+          </a>
         </div>
       </section>
 
@@ -941,42 +970,6 @@ function Home() {
               to deployment and maintenance. I'm passionate about clean code architecture, performance 
               optimization, and creating exceptional user experiences.
             </p>
-            
-            <div style={{ marginBottom: '2rem' }}>
-              <a 
-                href="/assets/nak_resume.html" 
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '10px 20px',
-                  background: theme.gradient,
-                  color: '#ffffff',
-                  borderRadius: '6px',
-                  fontWeight: '600',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 14px rgba(10, 101, 220, 0.2)'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 7px 14px rgba(10, 101, 220, 0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 14px rgba(10, 101, 220, 0.2)';
-                }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                Download Resume
-              </a>
-            </div>
             
             <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: theme.textPrimary }}>Experience</h3>
             <div style={{ marginBottom: '1.5rem' }}>
@@ -1230,13 +1223,13 @@ function Home() {
               
               <div>
                 <div style={{ fontWeight: '600', color: theme.accent, marginBottom: '0.25rem' }}>
-                  Bachelor of Science in Information Technology
+                  Bachelor of Science in Computer Science
                 </div>
                 <div style={{ fontWeight: '500', color: theme.textPrimary, marginBottom: '0.25rem' }}>
-                  Quezon City Polytechnic University
+                  AMA Computer University
                 </div>
                 <div style={{ color: theme.textSecondary, fontSize: '0.9rem' }}>
-                  2010 - 2016
+                  Graduated 2019
                 </div>
               </div>
             </div>
