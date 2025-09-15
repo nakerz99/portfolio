@@ -59,6 +59,21 @@ const keyframes = `
     }
   }
 
+  /* Hide mobile controls by default (on desktop) */
+  .mobile-controls {
+    display: none !important;
+  }
+  
+  /* Define class for theme toggle in desktop nav */
+  .desktop-theme-toggle {
+    display: flex !important;
+  }
+  
+  /* Define class for theme toggle in mobile controls */
+  .mobile-theme-toggle {
+    display: none !important;
+  }
+  
   @media (max-width: 768px) {
     .hero-container {
       flex-direction: column !important;
@@ -82,6 +97,18 @@ const keyframes = `
     
     .desktop-nav {
       display: none !important;
+    }
+    
+    .desktop-theme-toggle {
+      display: none !important;
+    }
+    
+    .mobile-theme-toggle {
+      display: flex !important;
+    }
+    
+    .mobile-controls {
+      display: flex !important;
     }
     
     .mobile-menu-btn {
@@ -131,6 +158,7 @@ function Home() {
   });
   const [formStatus, setFormStatus] = useState(null); // null, 'success', 'error'
   const [formMessage, setFormMessage] = useState('');
+  const [visibleSections, setVisibleSections] = useState(new Set());
   
   // Tracking scroll position to update active navigation and parallax effect
   useEffect(() => {
@@ -163,6 +191,30 @@ function Home() {
     
     return () => {
       document.head.removeChild(styleElement);
+    };
+  }, []);
+
+  // Scroll animation effect
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => new Set([...prev, entry.target.id]));
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach(section => observer.observe(section));
+
+    return () => {
+      sections.forEach(section => observer.unobserve(section));
     };
   }, []);
 
@@ -207,6 +259,24 @@ function Home() {
   const projects = [
     {
       id: 1,
+      title: "Milemarker - Wealth Management Platform",
+      description: "As a Full Stack Engineer, I developed and maintained a comprehensive wealth management data platform that unifies data for advisory firms. Built both frontend interfaces and backend systems that enable wealth management companies to analyze, report, and act with confidence by centralizing their data and providing unlimited insights through modern data pipelines and analytics.",
+      tech: ["Laravel Filament", "Nuxt.js", "Vue.js", "TypeScript", "MySQL", "Laravel Sail", "Docker", "API", "Tailwind"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Milemarker",
+      client: "Milemarker",
+      link: "https://milemarker.co"
+    },
+    {
+      id: 2,
+      title: "ADVSR.ai",
+      description: "Provided DevOps services for a marketing platform tailored for independent advisors in the professional services industry. Managed infrastructure, deployment pipelines, and ensured seamless integration and deployment of applications while maintaining platform health and performance.",
+      tech: ["DevOps", "CI/CD", "Infrastructure", "Deployment", "Monitoring"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=ADVSR.ai",
+      client: "ADVSR.ai",
+      link: "https://www.advsr.ai"
+    },
+    {
+      id: 3,
       title: "HMO Portal System",
       description: "Multi-role healthcare management portal with three distinct dashboards: Admin for analytics and oversight, HR for employee management, and Employee portal for online consultation scheduling with priority queuing.",
       tech: ["Laravel", "Vue.js", "MySQL", "WebSockets", "Bootstrap"],
@@ -214,7 +284,7 @@ function Home() {
       client: "OmniQuest Inc."
     },
     {
-      id: 2,
+      id: 4,
       title: "Inventory with QR Code System",
       description: "Complete asset tracking system using QR codes to monitor the full lifecycle of items. Tracks purchase details, expiration dates, current location, and complete movement history of each inventory item.",
       tech: ["Laravel", "JavaScript", "QR Code API", "MySQL", "Bootstrap"],
@@ -222,7 +292,7 @@ function Home() {
       client: "Philippine Statistical Research and Training Institute"
     },
     {
-      id: 3,
+      id: 5,
       title: "HRIS with Payroll System",
       description: "Human Resources Information System with integrated payroll functionality for a government agency, featuring employee management, leave tracking, payroll calculation, and comprehensive reporting.",
       tech: ["Laravel", "MySQL", "JavaScript", "jQuery", "Bootstrap"],
@@ -230,7 +300,7 @@ function Home() {
       client: "Philippine Statistical Research and Training Institute"
     },
     {
-      id: 4,
+      id: 6,
       title: "E-commerce API Integration",
       description: "Integration platform connecting client's inventory system with Shopify and eBay marketplaces, allowing for seamless product listing, inventory sync, and order management across multiple channels.",
       tech: ["PHP", "React.js", "Shopify API", "eBay API", "MySQL"],
@@ -238,7 +308,7 @@ function Home() {
       client: "Hammerulo Data Corporation"
     },
     {
-      id: 5,
+      id: 7,
       title: "Single Sign-On System",
       description: "Centralized authentication system allowing users to access multiple applications with one set of credentials. Integrates with ticketing system and inventory management via custom API endpoints.",
       tech: ["Laravel", "RESTful API", "OAuth 2.0", "MySQL", "Vue.js"],
@@ -246,11 +316,56 @@ function Home() {
       client: "Philippine Statistical Research and Training Institute"
     },
     {
-      id: 6,
+      id: 8,
       title: "Cloud Server Infrastructure",
       description: "Designed and deployed scalable cloud infrastructure for client applications using AWS, Google Cloud, and Linode. Implemented security best practices, automated backups, and monitoring systems.",
       tech: ["AWS", "Google Cloud", "Linode", "Docker", "Linux/Ubuntu"],
       image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Cloud+Infra"
+    },
+    {
+      id: 9,
+      title: "AV Suites - Boutique Hotel",
+      description: "Developed website for a luxury boutique hotel overlooking the Mindoro Strait in Puerto Galera, Oriental Mindoro. Designed the booking system and integrated virtual tour of the property featuring private balconies, ocean views, and recently refurbished accommodations.",
+      tech: ["WordPress", "Booking System", "Virtual Tour", "SEO", "Responsive Design"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=AV+Suites",
+      client: "AV Suites",
+      link: "https://avsuites.com"
+    },
+    {
+      id: 10,
+      title: "Remotify.ph",
+      description: "Deployed and managed high-availability infrastructure for a remote job listing platform. Implemented Linode servers, RDS databases, object storage with daily 3-day backups for source code and database. Set up Cloudflare for CDN, DDoS protection, firewall, and reverse proxy.",
+      tech: ["Linode", "AWS RDS", "Object Storage", "CloudFlare", "Linux", "Auto-Backup"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Remotify.ph",
+      client: "Remotify.ph",
+      link: "https://remotify.ph"
+    },
+    {
+      id: 11,
+      title: "Felson Technology & Solutions Corporation",
+      description: "Built and managed corporate website for one of the competitive trading companies in the Philippines engaged in wholesaling and retailing of high quality hardware materials nationwide.",
+      tech: ["HTML/CSS", "JavaScript", "Bootstrap", "PHP", "jQuery"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Felson+Tech",
+      client: "Felson Technology",
+      link: "https://felsontech.com"
+    },
+    {
+      id: 12,
+      title: "LawBasePh",
+      description: "Created legal case management system with document organization, client profiles, and calendar integration.",
+      tech: ["Laravel", "MySQL", "Vue.js", "Bootstrap", "REST API"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=LawBasePh",
+      client: "LawBasePh",
+      status: "Inactive"
+    },
+    {
+      id: 13,
+      title: "Dela Rosa & Casilla Law",
+      description: "Designed and developed a comprehensive website for a boutique law firm specializing in corporate law, civil litigation, and family law, featuring attorney profiles, detailed practice areas, client resources, and an integrated contact system.",
+      tech: ["WordPress", "CSS", "JavaScript", "PHP", "Contact Form 7"],
+      image: "https://dummyimage.com/600x400/0284c7/ffffff.png&text=Dela+Rosa+%26+Casilla+Law",
+      client: "Dela Rosa & Casilla Law",
+      status: "Inactive"
     }
   ];
 
@@ -258,11 +373,11 @@ function Home() {
   const skillCategories = [
     {
       category: "Frontend Libraries and Tools",
-      skills: ["JavaScript", "ReactJS", "jQuery", "Vue.js"]
+      skills: ["JavaScript", "ReactJS", "jQuery", "Vue.js", "Nuxt.js"]
     },
     {
       category: "Backend & Database",
-      skills: ["PHP", "Laravel", "MySQL", "REST APIs", "SOAP API", "GraphQL", "CodeIgniter", "Symfony"]
+      skills: ["PHP", "Laravel", "Laravel Filament", "MySQL", "REST APIs", "SOAP API", "GraphQL", "CodeIgniter", "Symfony"]
     },
     {
       category: "DevOps & Infrastructure",
@@ -456,6 +571,7 @@ function Home() {
             )}
           </button>
           <button 
+            className="desktop-theme-toggle"
             onClick={toggleDarkMode} 
             style={{ 
               background: 'transparent',
@@ -485,8 +601,13 @@ function Home() {
         </div>
         
         {/* Mobile Menu Button & Theme Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div className="mobile-controls" style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '0.5rem' 
+        }}>
           <button 
+            className="mobile-theme-toggle"
             onClick={toggleDarkMode} 
             style={{ 
               background: 'transparent',
@@ -942,7 +1063,10 @@ function Home() {
       <section id="about" style={{ 
         padding: '6rem 2rem',
         maxWidth: '1100px',
-        margin: '0 auto'
+        margin: '0 auto',
+        opacity: visibleSections.has('about') ? 1 : 0,
+        transform: visibleSections.has('about') ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'all 0.8s ease-out'
       }}>
         <h2 style={{ 
           fontSize: '2.5rem', 
@@ -979,26 +1103,27 @@ function Home() {
               </div>
               <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>Hammerulo Data Corporation, Taguig City</div>
               <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.6', paddingLeft: '1rem' }}>
-                <li>Develop and maintain web applications</li>
-                <li>Integrate e-commerce API to web applications (Ebay and Shopify)</li>
-                <li>Develop front-end website architecture using ReactJs</li>
-                <li>Develop back-end website applications using Laravel</li>
-                <li>Create and maintain servers (AWS, Linode, Google Cloud)</li>
+                <li>Led development for Intelebase inventory management system with eBay and Shopify integration</li>
+                <li>Developed frontend features for Huvr using React and GraphQL</li>
+                <li>Maintained and enhanced JAWS, an internal legacy system built on Laravel 4.6</li>
+                <li>Managed Jira server and migration to AWS in Singapore</li>
+                <li>Created AI agents powered by OpenAI, Google Gemini, and Claude for HRIS, recruitment, and social media</li>
+                <li>Managed servers on AWS, Linode, and Google Cloud</li>
               </ul>
             </div>
             
             <div style={{ marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <div style={{ fontWeight: '600', color: theme.textPrimary }}>Freelance Web Developer</div>
-                <div style={{ color: theme.accent }}>2018 - Present</div>
+                <div style={{ fontWeight: '600', color: theme.textPrimary }}>Freelance Developer - Application Web Developer</div>
+                <div style={{ color: theme.accent }}>May 2017 - August 2019</div>
               </div>
               <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>Self-employed</div>
               <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.6', paddingLeft: '1rem' }}>
-                <li>Server configuration and management for client websites using Linux/Ubuntu</li>
-                <li>Performance optimization for WordPress sites using OpenLiteSpeed</li>
+                <li>Developed and maintained various websites using WordPress and Laravel</li>
+                <li>Designed custom web solutions tailored to client needs</li>
+                <li>Notable Projects: Wonder of Words, Clickbucks, Lawbase PH, Felson Tech, UP Dentistry Online Review, Dela Rosa Casilla Law</li>
                 <li>Implementation of security measures and CDN integration with Cloudflare</li>
-                <li>Development of custom web solutions for various clients</li>
-                <li>Ongoing maintenance and support for client websites and applications</li>
+                <li>Server configuration and management for client websites using Linux/Ubuntu</li>
               </ul>
             </div>
             
@@ -1021,42 +1146,31 @@ function Home() {
                 <div style={{ fontWeight: '600', color: theme.textPrimary }}>Senior Full Stack Web Application Developer</div>
                 <div style={{ color: theme.accent }}>May 2020 - April 2021</div>
               </div>
-              <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>Philippine Statistical Research and Training Institute, Quezon City</div>
+              <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>Sun Moon Tech, Quezon City</div>
               <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.6', paddingLeft: '1rem' }}>
-                <li>Developed applications for day-to-day operations</li>
-                <li>Created inventory system using QR code to track assets from purchase to disposal</li>
-                <li>Provided IT support to end-users across the organization</li>
-                <li>Conducted technical training for staff and other users</li>
+                <li>Developed and maintained frontend architecture using React.js</li>
+                <li>Built backend applications with Laravel, focusing on server-side logic</li>
+                <li>Led backend development for a mobile car insurance project, creating REST APIs</li>
+                <li>Implemented DevOps practices including CI/CD pipelines</li>
+                <li>Managed server infrastructure on AWS, Linode, and Google Cloud</li>
               </ul>
             </div>
             
             <div style={{ marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <div style={{ fontWeight: '600', color: theme.textPrimary }}>Full Stack Web Application Developer</div>
-                <div style={{ color: theme.accent }}>June 2019 - April 2020</div>
+                <div style={{ fontWeight: '600', color: theme.textPrimary }}>Highly Technical ICT Consultant</div>
+                <div style={{ color: theme.accent }}>June 2019 - December 2019</div>
               </div>
               <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>Philippine Statistical Research and Training Institute, Quezon City</div>
               <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.6', paddingLeft: '1rem' }}>
-                <li>Developed web applications for research and training management</li>
-                <li>Created and maintained databases for research data and analytics</li>
-                <li>Implemented security protocols for data protection</li>
-                <li>Designed user interfaces for internal applications</li>
+                <li>Developed and automated inventory and procurement system with QR ID functionality</li>
+                <li>Automated reporting and data visualization for statistical insights</li>
+                <li>Led and supervised a team of Junior Developers</li>
+                <li>Created comprehensive end-to-end system documentation</li>
               </ul>
             </div>
             
-            <div style={{ marginBottom: '1.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <div style={{ fontWeight: '600', color: theme.textPrimary }}>AWS Certified Cloud Practitioner</div>
-                <div style={{ color: theme.accent }}>April 2019</div>
-              </div>
-              <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>Amazon Web Services</div>
-              <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.6', paddingLeft: '1rem' }}>
-                <li>Validated technical expertise and knowledge of AWS Cloud services</li>
-                <li>Proficient in AWS core services, security best practices, and cloud architecture concepts</li>
-                <li>Demonstrated understanding of cloud economics, billing, and basic AWS deployment models</li>
-              </ul>
-            </div>
-            
+
             <div style={{ marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                 <div style={{ fontWeight: '600', color: theme.textPrimary }}>Sr. Application Developer</div>
@@ -1064,19 +1178,19 @@ function Home() {
               </div>
               <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>OmniQuest Inc. | Reliance Group of Companies</div>
               <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.6', paddingLeft: '1rem' }}>
-                <li>Developed front-end website architecture</li>
-                <li>Designed user interactions on web pages</li>
-                <li>Developed back-end website applications</li>
-                <li>Ensured cross-platform optimization for mobile phones</li>
-                <li>Created and maintained servers (AWS)</li>
-                <li>Secured APIs and server connections for user data privacy (HMO DATA)</li>
+                <li>Developed and maintained HMO Portal for Flexicare and Medical Processing System</li>
+                <li>Worked across full stack using React.js, jQuery, PHP with Laravel and CodeIgniter</li>
+                <li>Configured servers using Apache and Nginx for optimized web performance</li>
+                <li>Ensured cross-platform compatibility for mobile devices</li>
+                <li>Set up and maintained cloud infrastructure on AWS</li>
+                <li>Secured APIs and database connections to protect sensitive HMO data</li>
               </ul>
             </div>
             
             <div style={{ marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                <div style={{ fontWeight: '600', color: theme.textPrimary }}>Web Developer</div>
-                <div style={{ color: theme.accent }}>2017 - 2018</div>
+                <div style={{ fontWeight: '600', color: theme.textPrimary }}>Software Developer</div>
+                <div style={{ color: theme.accent }}>June 2016 - December 2016</div>
               </div>
               <div style={{ color: theme.textSecondary, marginBottom: '0.5rem' }}>Magnalux Digital Incorporation</div>
               <ul style={{ color: theme.textSecondary, fontSize: '0.95rem', lineHeight: '1.6', paddingLeft: '1rem' }}>
@@ -1104,11 +1218,12 @@ function Home() {
                 paddingLeft: '1.5rem',
                 listStyleType: 'disc'
               }}>
-                <li>Proficient in PHP, Laravel, and MySQL for backend development</li>
-                <li>Skilled in JavaScript frameworks like ReactJS and Vue.js for frontend development</li>
-                <li>Experienced in building RESTful and SOAP APIs for seamless integration</li>
-                <li>Knowledgeable in cloud services (AWS, Google Cloud) and server management</li>
-                <li>Strong understanding of database design, optimization, and security</li>
+                <li>Proficient in PHP frameworks (Laravel, CodeIgniter, Symfony) and MySQL for backend development</li>
+                <li>Skilled in JavaScript frameworks including ReactJS, Vue.js, and jQuery for frontend development</li>
+                <li>Experienced in building RESTful and SOAP APIs for seamless integration with e-commerce platforms (eBay & Shopify)</li>
+                <li>Expert in cloud services (AWS, Google Cloud, Linode) and server management (Nginx, Apache)</li>
+                <li>Strong understanding of database design, optimization, and security across LAMP environments</li>
+                <li>Proficient with AI tools and frameworks including OpenAI, Google Gemini, Claude Anthropic, and LangChain</li>
                 <li>Adept in using version control (Git), project management tools, and CI/CD pipelines</li>
               </ul>
             </div>
@@ -1119,43 +1234,235 @@ function Home() {
               borderRadius: '10px',
               marginBottom: '2rem'
             }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: theme.textPrimary }}>Technical Skills</h3>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
-                gap: '1rem'
-              }}>
-                {[
-                  'PHP', 'Laravel', 'MySQL', 'JavaScript', 'ReactJS', 'Vue.js', 
-                  'REST APIs', 'SOAP API', 'GraphQL', 'AWS', 'Google Cloud', 
-                  'Linux/Ubuntu', 'Docker', 'Git', 'WordPress', 'Agile Methodologies'
-                ].map((skill, index) => (
-                  <div key={index} style={{ 
-                    padding: '0.8rem',
-                    background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
-                    color: theme.accent,
-                    borderRadius: '8px',
-                    fontSize: '0.95rem',
-                    fontWeight: '500',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                    border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}`,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-3px)';
-                    e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-                  }}
-                  >
-                    {skill}
-                  </div>
-                ))}
+              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: theme.textPrimary }}>Technical Skills</h3>
+              
+              {/* Backend Skills */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: theme.accent, fontWeight: '500' }}>Backend Development</h4>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+                  gap: '0.8rem'
+                }}>
+                  {['PHP', 'Laravel', 'CodeIgniter', 'Symfony', 'Python', 'MySQL', 'LAMP'].map((skill, index) => (
+                    <div key={index} style={{ 
+                      padding: '0.8rem',
+                      background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
+                      color: theme.accent,
+                      borderRadius: '8px',
+                      fontSize: '0.95rem',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                      border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px)';
+                      e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                    }}
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Frontend Skills */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: theme.accent, fontWeight: '500' }}>Frontend Development</h4>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+                  gap: '0.8rem'
+                }}>
+                  {['JavaScript', 'jQuery', 'ReactJS', 'Vue.js', 'WordPress'].map((skill, index) => (
+                    <div key={index} style={{ 
+                      padding: '0.8rem',
+                      background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
+                      color: theme.accent,
+                      borderRadius: '8px',
+                      fontSize: '0.95rem',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                      border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px)';
+                      e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                    }}
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Cloud & DevOps */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: theme.accent, fontWeight: '500' }}>Cloud & DevOps</h4>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+                  gap: '0.8rem'
+                }}>
+                  {['AWS', 'Google Cloud', 'Linode', 'Nginx', 'Apache', 'Docker', 'Git'].map((skill, index) => (
+                    <div key={index} style={{ 
+                      padding: '0.8rem',
+                      background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
+                      color: theme.accent,
+                      borderRadius: '8px',
+                      fontSize: '0.95rem',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                      border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px)';
+                      e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                    }}
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* APIs & Integration */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: theme.accent, fontWeight: '500' }}>APIs & Integration</h4>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+                  gap: '0.8rem'
+                }}>
+                  {['REST APIs', 'SOAP API', 'GraphQL', 'E-Commerce (eBay & Shopify)'].map((skill, index) => (
+                    <div key={index} style={{ 
+                      padding: '0.8rem',
+                      background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
+                      color: theme.accent,
+                      borderRadius: '8px',
+                      fontSize: '0.95rem',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                      border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}`,
+                      textAlign: 'center'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px)';
+                      e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                    }}
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Operating Systems */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h4 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: theme.accent, fontWeight: '500' }}>Operating Systems</h4>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+                  gap: '0.8rem'
+                }}>
+                  {['Linux/Ubuntu', 'macOS', 'Windows'].map((skill, index) => (
+                    <div key={index} style={{ 
+                      padding: '0.8rem',
+                      background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
+                      color: theme.accent,
+                      borderRadius: '8px',
+                      fontSize: '0.95rem',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                      border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px)';
+                      e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                    }}
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* AI & Machine Learning */}
+              <div>
+                <h4 style={{ fontSize: '1.2rem', marginBottom: '1rem', color: theme.accent, fontWeight: '500' }}>AI & Machine Learning</h4>
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+                  gap: '0.8rem'
+                }}>
+                  {['OpenAI', 'Google Gemini', 'Claude Anthropic', 'OpenwebUI', 'LangChain'].map((skill, index) => (
+                    <div key={index} style={{ 
+                      padding: '0.8rem',
+                      background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
+                      color: theme.accent,
+                      borderRadius: '8px',
+                      fontSize: '0.95rem',
+                      fontWeight: '500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                      border: `1px solid ${isDarkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.transform = 'translateY(-3px)';
+                      e.target.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
+                    }}
+                    >
+                      {skill}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -1264,14 +1571,17 @@ function Home() {
         padding: '6rem 2rem',
         maxWidth: '1100px',
         margin: '0 auto',
-        position: 'relative'
+        position: 'relative',
+        opacity: visibleSections.has('projects') ? 1 : 0,
+        transform: visibleSections.has('projects') ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'all 0.8s ease-out'
       }}>
         <h2 style={{ 
           fontSize: '2.5rem', 
           color: theme.accent,
           marginBottom: '1rem',
           textAlign: 'center'
-        }}>My Projects</h2>
+        }}>Projects</h2>
         <div style={{ width: '60px', height: '4px', background: theme.accent, margin: '0 auto 3rem auto' }}></div>
         
         <div style={{ 
@@ -1327,14 +1637,16 @@ function Home() {
                   position: 'absolute',
                   top: '1rem',
                   right: '1rem',
-                  background: `linear-gradient(135deg, ${theme.accent} 0%, ${theme.secondaryAccent} 100%)`,
+                  background: project.status === 'Inactive' 
+                    ? `linear-gradient(135deg, ${theme.secondaryAccent} 0%, #dc2626 100%)`
+                    : `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
                   color: 'white',
                   padding: '0.35rem 0.75rem',
                   borderRadius: '20px',
                   fontSize: '0.8rem',
                   fontWeight: '600'
                 }}>
-                  Featured
+                  {project.status || 'Active'}
                 </div>
               </div>
               <div style={{ padding: '1.5rem' }}>
@@ -1382,27 +1694,64 @@ function Home() {
                     </div>
                   ))}
                 </div>
-                <button 
-                  onClick={() => setShowProject(project.id)}
-                  style={{
-                    background: 'transparent',
-                    color: theme.accent,
-                    border: '1px solid ' + theme.accent,
-                    padding: '0.5rem 1rem',
-                    borderRadius: '4px',
-                    fontSize: '0.9rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = 'transparent';
-                  }}
-                >
-                  View Details
-                </button>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <button 
+                    onClick={() => setShowProject(project.id)}
+                    style={{
+                      background: 'transparent',
+                      color: theme.accent,
+                      border: '1px solid ' + theme.accent,
+                      padding: '0.5rem 1rem',
+                      borderRadius: '4px',
+                      fontSize: '0.9rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = 'transparent';
+                    }}
+                  >
+                    View Details
+                  </button>
+                  {project.link && (
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        background: `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
+                        color: 'white',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '4px',
+                        textDecoration: 'none',
+                        fontWeight: '600',
+                        fontSize: '0.9rem',
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 4px 14px rgba(0,0,0,0.1)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-2px)';
+                        e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'translateY(0px)';
+                        e.target.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)';
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                        <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                      </svg>
+                      Visit Website
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -1616,625 +1965,15 @@ function Home() {
         )}
       </section>
       
-      {/* Freelance Projects Section */}
-      <section id="freelanceProjects" style={{ 
-        padding: '6rem 2rem',
-        maxWidth: '1100px',
-        margin: '0 auto',
-        position: 'relative'
-      }}>
-        <h2 style={{ 
-          fontSize: '2.5rem', 
-          color: theme.accent,
-          marginBottom: '1rem',
-          textAlign: 'center'
-        }}>Freelance Projects</h2>
-        <div style={{ width: '60px', height: '4px', background: theme.accent, margin: '0 auto 3rem auto' }}></div>
-        
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-          gap: '2rem'
-        }}>
-          {/* AV Suites */}
-          <div 
-            style={{ 
-              background: theme.card,
-              borderRadius: '16px',
-              overflow: 'hidden',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-              border: '1px solid ' + theme.cardBorder,
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              position: 'relative',
-              animation: 'fadeIn 0.8s ease-out forwards',
-              opacity: 0
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-10px)';
-              e.target.style.boxShadow = isDarkMode 
-                ? `0 15px 40px rgba(6,182,212,0.2)` 
-                : `0 15px 40px rgba(2,132,199,0.15)`;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <img 
-                src="https://dummyimage.com/600x400/0284c7/ffffff.png&text=AV+Suites" 
-                alt="AV Suites"
-                style={{ 
-                  width: '100%',
-                  height: '200px',
-                  objectFit: 'cover',
-                  transition: 'all 0.5s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scale(1)';
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                background: `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
-                color: 'white',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                Active
-              </div>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <h3 style={{ 
-                fontSize: '1.3rem', 
-                marginBottom: '0.5rem',
-                color: theme.textPrimary 
-              }}>
-                AV Suites - Boutique Hotel
-              </h3>
-              <p style={{ 
-                fontSize: '0.95rem', 
-                lineHeight: '1.6',
-                color: theme.textSecondary,
-                marginBottom: '1.5rem' 
-              }}>
-                Developed website for a luxury boutique hotel overlooking the Mindoro Strait in Puerto Galera, Oriental Mindoro. Designed the booking system and integrated virtual tour of the property featuring private balconies, ocean views, and recently refurbished accommodations.
-              </p>
-              <div style={{ 
-                display: 'flex', 
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-                marginBottom: '1rem' 
-              }}>
-                {["WordPress", "Booking System", "Virtual Tour", "SEO", "Responsive Design"].map((tech, index) => (
-                  <span key={index} style={{ 
-                    background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
-                    color: theme.accent,
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: '500'
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div>
-                <a 
-                  href="https://avsuites.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    background: `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
-                    color: 'white',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '6px',
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                    fontSize: '0.85rem',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.1)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0px)';
-                    e.target.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)';
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-                    <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-                  </svg>
-                  Visit Website
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          {/* Remotify.ph */}
-          <div 
-            style={{ 
-              background: theme.card,
-              borderRadius: '16px',
-              overflow: 'hidden',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-              border: '1px solid ' + theme.cardBorder,
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              position: 'relative',
-              animation: 'fadeIn 0.8s ease-out forwards',
-              animationDelay: '0.1s',
-              opacity: 0
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-10px)';
-              e.target.style.boxShadow = isDarkMode 
-                ? `0 15px 40px rgba(6,182,212,0.2)` 
-                : `0 15px 40px rgba(2,132,199,0.15)`;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <img 
-                src="https://dummyimage.com/600x400/0284c7/ffffff.png&text=Remotify.ph" 
-                alt="Remotify.ph"
-                style={{ 
-                  width: '100%',
-                  height: '200px',
-                  objectFit: 'cover',
-                  transition: 'all 0.5s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scale(1)';
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                background: `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
-                color: 'white',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                Active
-              </div>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <h3 style={{ 
-                fontSize: '1.3rem', 
-                marginBottom: '0.5rem',
-                color: theme.textPrimary 
-              }}>
-                Remotify.ph
-              </h3>
-              <p style={{ 
-                fontSize: '0.95rem', 
-                lineHeight: '1.6',
-                color: theme.textSecondary,
-                marginBottom: '1.5rem' 
-              }}>
-                Deployed and managed high-availability infrastructure for a remote job listing platform. Implemented Linode servers, RDS databases, object storage with daily 3-day backups for source code and database. Set up Cloudflare for CDN, DDoS protection, firewall, and reverse proxy.
-              </p>
-              <div style={{ 
-                display: 'flex', 
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-                marginBottom: '1rem' 
-              }}>
-                {["Linode", "AWS RDS", "Object Storage", "CloudFlare", "Linux", "Auto-Backup"].map((tech, index) => (
-                  <span key={index} style={{ 
-                    background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
-                    color: theme.accent,
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: '500'
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div>
-                <a 
-                  href="https://remotify.ph" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    background: `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
-                    color: 'white',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '6px',
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                    fontSize: '0.85rem',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.1)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0px)';
-                    e.target.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)';
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-                    <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-                  </svg>
-                  Visit Website
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          {/* Felson Tech */}
-          <div 
-            style={{ 
-              background: theme.card,
-              borderRadius: '16px',
-              overflow: 'hidden',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-              border: '1px solid ' + theme.cardBorder,
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              position: 'relative',
-              animation: 'fadeIn 0.8s ease-out forwards',
-              animationDelay: '0.2s',
-              opacity: 0
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-10px)';
-              e.target.style.boxShadow = isDarkMode 
-                ? `0 15px 40px rgba(6,182,212,0.2)` 
-                : `0 15px 40px rgba(2,132,199,0.15)`;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <img 
-                src="https://dummyimage.com/600x400/0284c7/ffffff.png&text=Felson+Tech" 
-                alt="Felson Tech"
-                style={{ 
-                  width: '100%',
-                  height: '200px',
-                  objectFit: 'cover',
-                  transition: 'all 0.5s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scale(1)';
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                background: `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
-                color: 'white',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                Active
-              </div>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <h3 style={{ 
-                fontSize: '1.3rem', 
-                marginBottom: '0.5rem',
-                color: theme.textPrimary 
-              }}>
-                Felson Technology & Solutions Corporation
-              </h3>
-              <p style={{ 
-                fontSize: '0.95rem', 
-                lineHeight: '1.6',
-                color: theme.textSecondary,
-                marginBottom: '1.5rem' 
-              }}>
-                Built and managed corporate website for one of the competitive trading companies in the Philippines engaged in wholesaling and retailing of high quality hardware materials nationwide.
-              </p>
-              <div style={{ 
-                display: 'flex', 
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-                marginBottom: '1rem' 
-              }}>
-                {["HTML/CSS", "JavaScript", "Bootstrap", "PHP", "jQuery"].map((tech, index) => (
-                  <span key={index} style={{ 
-                    background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
-                    color: theme.accent,
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: '500'
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div>
-                <a 
-                  href="https://felsontech.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    background: `linear-gradient(135deg, ${theme.accent} 0%, #10b981 100%)`,
-                    color: 'white',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '6px',
-                    textDecoration: 'none',
-                    fontWeight: '600',
-                    fontSize: '0.85rem',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 4px 14px rgba(0,0,0,0.1)'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0px)';
-                    e.target.style.boxShadow = '0 4px 14px rgba(0,0,0,0.1)';
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
-                    <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
-                  </svg>
-                  Visit Website
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          {/* LawBasePh */}
-          <div 
-            style={{ 
-              background: theme.card,
-              borderRadius: '16px',
-              overflow: 'hidden',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-              border: '1px solid ' + theme.cardBorder,
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              position: 'relative',
-              animation: 'fadeIn 0.8s ease-out forwards',
-              animationDelay: '0.3s',
-              opacity: 0
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-10px)';
-              e.target.style.boxShadow = isDarkMode 
-                ? `0 15px 40px rgba(6,182,212,0.2)` 
-                : `0 15px 40px rgba(2,132,199,0.15)`;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <img 
-                src="https://dummyimage.com/600x400/0284c7/ffffff.png&text=LawBasePh" 
-                alt="LawBasePh"
-                style={{ 
-                  width: '100%',
-                  height: '200px',
-                  objectFit: 'cover',
-                  transition: 'all 0.5s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scale(1)';
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                background: `linear-gradient(135deg, ${theme.secondaryAccent} 0%, #dc2626 100%)`,
-                color: 'white',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                Inactive
-              </div>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <h3 style={{ 
-                fontSize: '1.3rem', 
-                marginBottom: '0.5rem',
-                color: theme.textPrimary 
-              }}>
-                LawBasePh
-              </h3>
-              <p style={{ 
-                fontSize: '0.95rem', 
-                lineHeight: '1.6',
-                color: theme.textSecondary,
-                marginBottom: '1.5rem' 
-              }}>
-                Created legal case management system with document organization, client profiles, and calendar integration.
-              </p>
-              <div style={{ 
-                display: 'flex', 
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-                marginBottom: '1rem' 
-              }}>
-                {["Laravel", "MySQL", "Vue.js", "Bootstrap", "REST API"].map((tech, index) => (
-                  <span key={index} style={{ 
-                    background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
-                    color: theme.accent,
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: '500'
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          {/* Dela Rosa & Casilla Law */}
-          <div 
-            style={{ 
-              background: theme.card,
-              borderRadius: '16px',
-              overflow: 'hidden',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-              border: '1px solid ' + theme.cardBorder,
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0)',
-              position: 'relative',
-              animation: 'fadeIn 0.8s ease-out forwards',
-              animationDelay: '0.4s',
-              opacity: 0
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-10px)';
-              e.target.style.boxShadow = isDarkMode 
-                ? `0 15px 40px rgba(6,182,212,0.2)` 
-                : `0 15px 40px rgba(2,132,199,0.15)`;
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-            }}
-          >
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <img 
-                src="https://dummyimage.com/600x400/0284c7/ffffff.png&text=Dela+Rosa+%26+Casilla+Law" 
-                alt="Dela Rosa & Casilla Law"
-                style={{ 
-                  width: '100%',
-                  height: '200px',
-                  objectFit: 'cover',
-                  transition: 'all 0.5s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scale(1)';
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                background: `linear-gradient(135deg, ${theme.secondaryAccent} 0%, #dc2626 100%)`,
-                color: 'white',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '20px',
-                fontSize: '0.8rem',
-                fontWeight: '600'
-              }}>
-                Inactive
-              </div>
-            </div>
-            <div style={{ padding: '1.5rem' }}>
-              <h3 style={{ 
-                fontSize: '1.3rem', 
-                marginBottom: '0.5rem',
-                color: theme.textPrimary 
-              }}>
-                Dela Rosa & Casilla Law
-              </h3>
-              <p style={{ 
-                fontSize: '0.95rem', 
-                lineHeight: '1.6',
-                color: theme.textSecondary,
-                marginBottom: '1.5rem' 
-              }}>
-                Designed and developed a comprehensive website for a boutique law firm specializing in corporate law, civil litigation, and family law, featuring attorney profiles, detailed practice areas, client resources, and an integrated contact system.
-              </p>
-              <div style={{ 
-                display: 'flex', 
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-                marginBottom: '1rem' 
-              }}>
-                {["WordPress", "CSS", "JavaScript", "PHP", "Contact Form 7"].map((tech, index) => (
-                  <span key={index} style={{ 
-                    background: isDarkMode ? 'rgba(100,255,218,0.1)' : 'rgba(75,108,183,0.1)',
-                    color: theme.accent,
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: '500'
-                  }}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div style={{ 
-          textAlign: 'center',
-          marginTop: '2.5rem',
-          fontSize: '1.1rem',
-          color: theme.textSecondary,
-          padding: '1.5rem',
-          background: isDarkMode ? 'rgba(100,255,218,0.05)' : 'rgba(75,108,183,0.05)',
-          borderRadius: '10px',
-          lineHeight: '1.7'
-        }}>
-          <p>Built custom web applications using WordPress, Laravel, and modern JavaScript frameworks for various client needs.</p>
-        </div>
-      </section>
 
       {/* Contact Section */}
       <section id="contact" style={{ 
         padding: '6rem 2rem',
         maxWidth: '1000px',
-        margin: '0 auto'
+        margin: '0 auto',
+        opacity: visibleSections.has('contact') ? 1 : 0,
+        transform: visibleSections.has('contact') ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'all 0.8s ease-out'
       }}>
         <h2 style={{ 
           fontSize: '2.5rem', 
@@ -2651,7 +2390,7 @@ function Home() {
             {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
               <a 
                 key={index}
-                href={`#${item.toLowerCase()}`}
+                href={`#${item.toLowerCase().replace(' ', '')}`}
                 style={{
                   color: theme.textSecondary,
                   textDecoration: 'none',
